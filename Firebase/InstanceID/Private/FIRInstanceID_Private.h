@@ -32,6 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, readonly, strong) FIRInstallations *installations;
 
+/// This is a cached result of `[self.installations installationIDWithCompletion:]`. It is updated on FIRInstallationIDDidChangeNotification.
+@property(atomic, readonly, strong, nullable) NSString *installationsID;
+
 /**
  *  Private initializer.
  */
