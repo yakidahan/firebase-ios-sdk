@@ -30,16 +30,23 @@ let package = Package(
   ],
   targets: [
     .target(
+      name: "ManifestReader",
+      dependencies: ["SwiftProtobuf"]
+    ),
+    .target(
+      name: "PodfileToZip",
+      dependencies: ["SwiftProtobuf", "Utilities"]
+    ),
+    .target(
       name: "UpdateFirebasePod",
       dependencies: ["ManifestReader"]
     ),
     .target(
-      name: "ZipBuilder",
-      dependencies: ["ManifestReader"]
+      name: "Utilities"
     ),
     .target(
-      name: "ManifestReader",
-      dependencies: ["SwiftProtobuf"]
+      name: "ZipBuilder",
+      dependencies: ["ManifestReader", "PodfileToZip", "Utilities"]
     ),
   ]
 )

@@ -19,11 +19,11 @@ import Foundation
 /// Convenience function for calling functions in the Shell. This should be used sparingly and only
 /// when interacting with tools that can't be accessed directly in Swift (i.e. CocoaPods,
 /// xcodebuild, etc). Intentionally empty, this enum is used as a namespace.
-internal enum Shell {}
+public enum Shell {}
 
 extension Shell {
   /// A type to represent the result of running a shell command.
-  enum Result {
+  public enum Result {
     /// The command was successfully run (based on the output code), with the output string as the
     /// associated value.
     case success(output: String)
@@ -42,9 +42,9 @@ extension Shell {
   ///   - outputToConsole: A flag if the command output should be written to the console as well.
   ///   - workingDir: An optional working directory to run the shell command in.
   /// - Returns: A Result containing output information from the command.
-  static func executeCommandFromScript(_ command: String,
-                                       outputToConsole: Bool = true,
-                                       workingDir: URL? = nil) -> Result {
+  public static func executeCommandFromScript(_ command: String,
+                                              outputToConsole: Bool = true,
+                                              workingDir: URL? = nil) -> Result {
     let scriptPath: URL
     do {
       let tempScriptsDir = FileManager.default.temporaryDirectory(withName: "temp_scripts")

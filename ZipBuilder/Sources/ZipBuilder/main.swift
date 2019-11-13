@@ -15,6 +15,7 @@
  */
 
 import Foundation
+import PodfileToZip
 
 // Delete the cache directory, if it exists.
 do {
@@ -45,7 +46,8 @@ let builder = ZipBuilder(paths: paths, customSpecRepos: args.customSpecRepos)
 
 do {
   // Build the zip file and get the path.
-  let projectDir = FileManager.default.temporaryDirectory(withName: "project")
+  let projectDir = FileManager.default.temporaryDirectory(withName: "project",
+                                                          withBase: LaunchArgs.shared.buildRoot)
   let artifacts = try builder.buildAndAssembleRelease(inProjectDir: projectDir)
   let firebaseVersion = artifacts.firebaseVersion
   let location = artifacts.outputDir
@@ -110,7 +112,7 @@ do {
       // Move all the bundles in the frameworks out to a common "Resources" directory to match the
       // existing Zip structure.
       let resourcesDir = fullPath.appendingPathComponent("Resources")
-      _ = try ResourcesManager.moveAllBundles(inDirectory: fullPath, to: resourcesDir)
+      _ = try PodfileToZip.ResourcesManager.moveAllBundles(inDirectory: fullPath, to: resourcesDir)
     }
   }
 

@@ -15,9 +15,10 @@
  */
 
 import Foundation
+import Utilities
 
 /// Functions related to managing resources. Intentionally empty, this enum is used as a namespace.
-enum ResourcesManager {}
+public enum ResourcesManager {}
 
 extension ResourcesManager {
   /// Recursively searches a directory for any sign of resources: `.bundle` folders, or a non-empty
@@ -268,7 +269,7 @@ extension ResourcesManager {
 
       // Run the command and throw an error if it fails.
       let command = "ibtool --compile \(compiledPath.path) \(storyboard.path)"
-      let result = Shell.executeCommandFromScript(command)
+      let result = Utilities.Shell.executeCommandFromScript(command)
       switch result {
       case .success:
         // Remove the original storyboard file and continue.

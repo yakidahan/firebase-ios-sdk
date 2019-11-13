@@ -15,6 +15,7 @@
  */
 
 import Foundation
+import Utilities
 
 /// Different architectures to build frameworks for.
 private enum Architecture: String, CaseIterable {
@@ -51,7 +52,7 @@ private enum Architecture: String, CaseIterable {
 }
 
 /// A structure to build a .framework in a given project directory.
-struct FrameworkBuilder {
+public struct FrameworkBuilder {
   /// The directory containing the Xcode project and Pods folder.
   private let projectDir: URL
 
@@ -64,7 +65,7 @@ struct FrameworkBuilder {
   }
 
   /// Default initializer.
-  init(projectDir: URL, carthageBuild: Bool = false) {
+  public init(projectDir: URL, carthageBuild: Bool = false) {
     self.projectDir = projectDir
     self.carthageBuild = carthageBuild
   }
@@ -121,7 +122,7 @@ struct FrameworkBuilder {
   /// This runs a command and immediately returns a Shell result.
   /// NOTE: This exists in conjunction with the `Shell.execute...` due to issues with different
   ///       `.bash_profile` environment variables. This should be consolidated in the future.
-  private func syncExec(command: String, args: [String] = [], captureOutput: Bool = false) -> Shell.Result {
+  private func syncExec(command: String, args: [String] = [], captureOutput: Bool = false) -> Utilities.Shell.Result {
     let task = Process()
     task.launchPath = command
     task.arguments = args

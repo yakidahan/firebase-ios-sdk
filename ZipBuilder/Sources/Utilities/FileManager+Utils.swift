@@ -109,11 +109,11 @@ public extension FileManager {
 
   /// Returns a deterministic path of a temporary directory for the given name. Note: This does
   /// *not* create the directory if it doesn't exist, merely generates the name for creation.
-  func temporaryDirectory(withName name: String) -> URL {
+  func temporaryDirectory(withName name: String, withBase base: URL? = nil) -> URL {
     // Get access to the temporary directory. This could be passed in via `LaunchArgs`, or use the
     // default temporary directory.
     let tempDir: URL
-    if let root = LaunchArgs.shared.buildRoot {
+    if let root = base {
       tempDir = root
     } else if #available(OSX 10.12, *) {
       tempDir = temporaryDirectory

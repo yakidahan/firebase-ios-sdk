@@ -15,6 +15,7 @@
  */
 
 import Foundation
+import PodfileToZip
 
 import ManifestReader
 
@@ -237,7 +238,8 @@ struct ZipBuilder {
     // 5. Return the URL of the folder containing the contents of the Zip file.
 
     // Create the directory that will hold all the contents of the Zip file.
-    let zipDir = FileManager.default.temporaryDirectory(withName: "Firebase")
+    let zipDir = FileManager.default.temporaryDirectory(withName: "Firebase",
+                                                        withBase: LaunchArgs.shared.buildRoot)
     do {
       if FileManager.default.directoryExists(at: zipDir) {
         try FileManager.default.removeItem(at: zipDir)
@@ -682,7 +684,8 @@ struct ZipBuilder {
 
     // Create the temporary directory we'll be storing the build/assembled frameworks in, and remove
     // the Resources directory if it already exists.
-    let tempDir = fileManager.temporaryDirectory(withName: "all_frameworks")
+    let tempDir = fileManager.temporaryDirectory(withName: "all_frameworks",
+                                                 withBase: LaunchArgs.shared.buildRoot)
     let tempResourceDir = tempDir.appendingPathComponent("Resources")
     do {
       try fileManager.createDirectory(at: tempDir,
@@ -719,7 +722,7 @@ struct ZipBuilder {
       // If there are no frameworks, it's an open source pod and we need to compile the source to
       // get a framework.
       if foundFrameworks.isEmpty {
-        let builder = FrameworkBuilder(projectDir: projectDir, carthageBuild: carthageBuild)
+        let builder = PodfileToZip.FrameworkBuilder(projectDir: projectDir, carthageBuild: carthageBuild)
         let framework = builder.buildFramework(withName: pod.name,
                                                version: pod.version,
                                                logsOutputDir: paths.logsOutputDir)
