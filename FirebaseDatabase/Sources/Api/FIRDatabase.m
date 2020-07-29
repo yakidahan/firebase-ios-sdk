@@ -165,6 +165,12 @@ static const char *FIREBASE_SEMVER = (const char *)STR(FIRDatabase_VERSION);
     });
 }
 
+- (void)useEmulatorWithHost:(NSString *)host port:(NSInteger)port {
+    NSAssert(host.length > 0, @"Cannot connect to nil or empty host");
+    NSString *fullHost = [NSString stringWithFormat:@"%@:%li", host, port];
+    self.repoInfo.host = fullHost;
+}
+
 - (void)goOnline {
     [self ensureRepo];
 

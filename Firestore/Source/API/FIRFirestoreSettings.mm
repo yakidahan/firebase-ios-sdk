@@ -119,6 +119,11 @@ ABSL_CONST_INIT extern "C" const int64_t kFIRFirestoreCacheSizeUnlimited =
   _cacheSizeBytes = cacheSizeBytes;
 }
 
+- (BOOL)isUsingDefaultHost {
+  NSString *defaultHost = [NSString stringWithUTF8String:Settings::DefaultHost];
+  return [self.host isEqualToString:defaultHost];
+}
+
 - (api::Settings)internalSettings {
   api::Settings settings;
   settings.set_host(util::MakeString(_host));
